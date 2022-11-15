@@ -15,17 +15,20 @@ export class Account {
   @PrimaryColumn("uuid")
   readonly account_id: string;
 
-  @Column()
+  @Column({
+    type: "float",
+    nullable: true,
+  })
   balance: number;
 
   @OneToOne((type) => User, (account) => Account)
   user: User;
 
   @OneToMany(() => Transaction, (transaction) => transaction.debitedAccount)
-  transactionsDebit: Transaction[];
+  transactionsDebit?: Transaction[];
 
   @OneToMany(() => Transaction, (transaction) => transaction.creditedAccount)
-  transactionsCredit: Transaction[];
+  transactionsCredit?: Transaction[];
 
   constructor() {
     if (!this.account_id) {

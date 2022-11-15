@@ -10,27 +10,34 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 
 export const userCreateService = async ({
-  userName,
+  username,
   password,
 }: IUserCreate) => {
   const userRepository = AppDataSource.getRepository(User);
   const accountRepository = AppDataSource.getRepository(Account);
+  const users = await userRepository.find();
 
-  const userAlreadyExist = await userRepository.findOne({
-    where: { userName },
-  });
+  const userAlreadyExist = users.find((user) => user.username === username);
 
   if (userAlreadyExist) {
     throw new AppError(409, "This user already exists");
   }
 
-  const newAccount = new Account();
+  const newAccount = {
+    account_id: uuidv4(),
+    balance: 100,
+  };
+
+  accountRepository.create(newAccount);
+  accountRepository.save(newAccount);
 
   const newUser: IUser = {
     user_id: uuidv4(),
-    userName: userName,
+    username: username,
     password: bcrypt.hashSync(password, 10),
+    account: newAccount,
   };
+
   userRepository.create(newUser);
   await userRepository.save(newUser);
   return newUser;

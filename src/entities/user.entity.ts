@@ -8,7 +8,7 @@ export class User {
   readonly user_id: string;
 
   @Column()
-  userName: string;
+  username: string;
 
   @Column()
   password: string;
