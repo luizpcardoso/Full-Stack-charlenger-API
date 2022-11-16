@@ -2,9 +2,16 @@
 
 ## Instruções para rodar a api de forma local:
 
+- Após clonar o repositório crie um arquivo .env na raiz do projeto contendo o salt do JWT e a URI do db. Para maior comodidade deixei um .envExemple na raiz do projeto, se preferir pode apenas renomer o arquivo de ".envExample" para ".env", os dados já estão definidos para teste não sendo necessário alterar.
+
+- após configurar o arquivo .env bas rodar o comando: `docker-compose up --build`.
+- Este último comnado criará os containers da aplicação na porta 3000, e do DB na porta 5432 por padrão. Recomendo verificar a disponibilidade das portas antes de rodar a aplicação.
+
 # Documentação
 
-# Rotas User
+## <strong>Rotas User</strong>
+
+---
 
 ## User create:
 

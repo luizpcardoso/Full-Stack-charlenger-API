@@ -1,3 +1,0 @@
-JWT_SECRET="palavrasecreta"
-
-DATABASE_URL=postgres://postgres:1234@db:5432/postgres
