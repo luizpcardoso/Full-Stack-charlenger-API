@@ -15,12 +15,10 @@ export class Transaction {
   @PrimaryColumn("uuid")
   readonly transaction_id: string;
 
-  @ManyToOne(() => Account, (account) => account.transactionsDebit)
-  @JoinColumn({ name: "transactionsDebit" })
+  @ManyToOne((type) => Account, (accounts) => Account, { eager: true })
   debitedAccount: Account;
 
-  @ManyToOne(() => Account, (account) => account.transactionsCredit)
-  @JoinColumn({ name: "transactionsCredit" })
+  @ManyToOne((type) => Account, (accounts) => Account, { eager: true })
   creditedAccount: Account;
 
   @Column()

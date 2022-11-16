@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import { AppError } from "../../errors/appErrors";
+import userBalanceReadService from "../../services/userBalanceRead.service";
 import userLoginService from "../../services/userLogin.service";
 
-export const userLoginController = async (req: Request, res: Response) => {
+export const userBalanceRead = async (req: Request, res: Response) => {
   try {
-    const { username, password } = req.body;
+    const username = req.username;
 
-    const token = await userLoginService({ username, password });
-
-    return res.status(200).json({ token });
+    const balance = await userBalanceReadService(username);
+    return res.status(200).send(balance);
   } catch (err) {
     if (err instanceof AppError) {
       return res.send({

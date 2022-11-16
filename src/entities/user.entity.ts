@@ -13,8 +13,10 @@ export class User {
   @Column()
   password: string;
 
-  @OneToOne((type) => Account, (user) => User)
-  @JoinColumn({ name: "account_id" })
+  @OneToOne((type) => Account, {
+    eager: true,
+  })
+  @JoinColumn({ name: "account" })
   account: Account;
 
   constructor() {

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AppError } from "../../errors/appErrors";
 
-import { userCreateService } from "../../srvices/userCreate.service";
+import { userCreateService } from "../../services/userCreate.service";
 
 export const userCreateController = async (req: Request, res: Response) => {
   try {

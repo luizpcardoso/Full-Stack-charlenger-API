@@ -29,7 +29,7 @@ export const userCreateService = async ({
   };
 
   accountRepository.create(newAccount);
-  accountRepository.save(newAccount);
+  await accountRepository.save(newAccount);
 
   const newUser: IUser = {
     user_id: uuidv4(),
