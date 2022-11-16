@@ -19,7 +19,7 @@ export const verifyAuthUserMiddleware = (
         process.env.JWT_SECRET as string,
         (error: any, decoded: any) => {
           if (error) {
-            return res.status(401).json({ message: "Invalid Token." });
+            throw new Error();
           }
 
           req.username = decoded.username;

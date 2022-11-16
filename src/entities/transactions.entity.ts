@@ -16,9 +16,11 @@ export class Transaction {
   readonly transaction_id: string;
 
   @ManyToOne((type) => Account, (accounts) => Account, { eager: true })
+  @JoinColumn()
   debitedAccount: Account;
 
   @ManyToOne((type) => Account, (accounts) => Account, { eager: true })
+  @JoinColumn()
   creditedAccount: Account;
 
   @Column()

@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import { AppError } from "../../errors/appErrors";
 import userBalanceReadService from "../../services/userBalanceRead.service";
-import userLoginService from "../../services/userLogin.service";
 
-export const userBalanceRead = async (req: Request, res: Response) => {
+export const userBalanceReadController = async (
+  req: Request,
+  res: Response
+) => {
   try {
     const username = req.username;
 

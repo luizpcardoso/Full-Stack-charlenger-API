@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { userCreateController } from "../controllers/users/userCreate.controller";
 import { userLoginController } from "../controllers/users/userLoguin.controller";
-import { userBalanceRead } from "../controllers/users/userBalanceRead.controller";
+import { userBalanceReadController } from "../controllers/users/userBalanceRead.controller";
 
 import verifyUserCreateFieldsMiddlewere from "../middlewares/verifyUserCreateFields.middleware";
 import verifyUserLoginFieldsMiddlewere from "../middlewares/verifyUserLoginFields.middleware";
@@ -12,6 +12,6 @@ const routes = Router();
 export const userRoutes: any = () => {
   routes.post("/user", verifyUserCreateFieldsMiddlewere, userCreateController);
   routes.post("/login", verifyUserLoginFieldsMiddlewere, userLoginController);
-  routes.get("/balance", verifyAuthUserMiddleware, userBalanceRead);
+  routes.get("/balance", verifyAuthUserMiddleware, userBalanceReadController);
   return routes;
 };
