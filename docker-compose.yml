@@ -17,7 +17,8 @@ services:
 
   db:
     container_name: charllenger-Api-Pg
-    image: postgres
+
+    image: "postgres"
     env_file:
       - .env
     expose:

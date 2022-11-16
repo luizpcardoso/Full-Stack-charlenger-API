@@ -40,5 +40,8 @@ export const userCreateService = async ({
 
   userRepository.create(newUser);
   await userRepository.save(newUser);
-  return newUser;
+
+  return {
+    username: newUser.username,
+  };
 };
