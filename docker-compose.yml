@@ -8,9 +8,9 @@ services:
     volumes:
       - ./src:/app/src
     expose:
-      - 3000
+      - 3001
     ports:
-      - 3000:3000
+      - 3001:3001
     depends_on:
       - db
     command: bash -c 'yarn migration:run && yarn dev'

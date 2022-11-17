@@ -30,7 +30,7 @@ const verifyUserCreateFieldsMiddlewere = async (
   if (!regex.test(password)) {
     return res
       .status(400)
-      .json({ error: "password must be six characters or more" });
+      .json({ error: "password must be eight characters or more" });
   }
 
   next();
