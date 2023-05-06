@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.3"
 services:
   api:
     container_name: charllenger-Api
@@ -8,7 +8,7 @@ services:
     volumes:
       - ./src:/app/src
     expose:
-      - 3000
+      - 3001
     ports:
-      - 3000:3000
+      - 3001:3001
     command: bash -c 'yarn dev'
