@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.9"
 services:
   api:
     container_name: charllenger-Api
@@ -8,20 +8,7 @@ services:
     volumes:
       - ./src:/app/src
     expose:
-      - 3001
+      - 3000
     ports:
-      - 3001:3001
-    # depends_on:
-    #   - db
-    command: bash -c 'yarn migration:run && yarn dev'
-
-  # db:
-  #   container_name: charllenger-Api-Pg
-
-  #   image: "postgres"
-  #   env_file:
-  #     - .env
-  #   expose:
-  #     - 5432
-  #   ports:
-  #     - 5432:5432
+      - 3000:3000
+    command: bash -c 'yarn dev'
