@@ -12,3 +12,5 @@ services:
     ports:
       - 3001:3001
     command: bash -c 'yarn dev'
+    logging:
+      driver: none
