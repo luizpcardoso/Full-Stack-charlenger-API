@@ -7,11 +7,14 @@ export class User {
   @PrimaryColumn("uuid")
   readonly user_id: string;
 
-  @Column()
+  @Column({ unique: true })
   username: string;
 
   @Column()
   password: string;
+
+  @Column({ unique: true })
+  email: string;
 
   @OneToOne((type) => Account, {
     eager: true,

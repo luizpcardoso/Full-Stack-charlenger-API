@@ -22,7 +22,8 @@ export class Account {
   })
   balance: number;
 
-  @OneToOne((type) => User)
+  @OneToOne(() => User)
+  @JoinColumn({ name: "user_id" })
   user: User;
 
   @OneToMany((type) => Transaction, (debitedAccount) => Transaction)

@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { AppError } from "../errors/appErrors";
 
 const verifyTransactionFieldsMiddleware = async (
   req: Request,
@@ -7,20 +8,25 @@ const verifyTransactionFieldsMiddleware = async (
 ) => {
   const { username, value } = req.body;
 
-  if (!username || !value) {
-    const error = [];
+  try {
+    if (!username || !value) {
+      const error = [];
 
-    if (!username) {
-      error.push("username is a required field");
-    }
-    if (!value) {
-      error.push("value is a required field");
+      if (!username) {
+        error.push("username is a required field");
+      }
+      if (!value) {
+        error.push("value is a required field");
+      }
+      throw new AppError(400, error.join(" - "));
     }
 
-    return res.status(400).json({ error: error });
+    next();
+  } catch (err) {
+    if (err instanceof AppError) {
+      return res.status(err.statusCode).send(err);
+    }
   }
-
-  next();
 };
 
 export default verifyTransactionFieldsMiddleware;

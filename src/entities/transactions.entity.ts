@@ -9,6 +9,7 @@ import {
 
 import { v4 as uuid } from "uuid";
 import { Account } from "./accounts.entity";
+import { User } from "./user.entity";
 
 @Entity()
 export class Transaction {
@@ -28,6 +29,10 @@ export class Transaction {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "user_id" })
+  user: User;
 
   constructor() {
     if (!this.transaction_id) {

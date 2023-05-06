@@ -11,16 +11,19 @@ import bcrypt from "bcrypt";
 
 export const userCreateService = async ({
   username,
+  email,
   password,
 }: IUserCreate) => {
   const userRepository = AppDataSource.getRepository(User);
   const accountRepository = AppDataSource.getRepository(Account);
   const users = await userRepository.find();
 
-  const userAlreadyExist = users.find((user) => user.username === username);
+  const userAlreadyExist = users.find(
+    (user) => user.email === email || user.username === username
+  );
 
   if (userAlreadyExist) {
-    throw new AppError(409, "This user already exists");
+    throw new AppError(409, "This username or email already exists");
   }
 
   const newAccount = {
@@ -28,15 +31,15 @@ export const userCreateService = async ({
     balance: 100,
   };
 
-  accountRepository.create(newAccount);
-  await accountRepository.save(newAccount);
-
   const newUser: IUser = {
     user_id: uuidv4(),
     username: username,
+    email: email,
     password: bcrypt.hashSync(password, 10),
     account: newAccount,
   };
+  accountRepository.create(newAccount);
+  await accountRepository.save(newAccount);
 
   userRepository.create(newUser);
   await userRepository.save(newUser);

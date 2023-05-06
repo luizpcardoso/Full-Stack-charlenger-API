@@ -38,7 +38,7 @@ const transactionReadService = async (
     );
   });
 
-  let response = {};
+  let response: {} = {};
 
   if (typeTransaction == "cashIn") {
     response = {

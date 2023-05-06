@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { AppError } from "../errors/appErrors";
 
 export const verifyAuthUserMiddleware = (
   req: Request,
@@ -10,7 +11,7 @@ export const verifyAuthUserMiddleware = (
     const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-      return res.status(401).json({ message: "Token required" });
+      throw new AppError(401, "Token required");
     }
 
     if (token != undefined) {
@@ -19,7 +20,7 @@ export const verifyAuthUserMiddleware = (
         process.env.JWT_SECRET as string,
         (error: any, decoded: any) => {
           if (error) {
-            throw new Error();
+            throw new AppError(401, "Ivalid token");
           }
 
           req.username = decoded.username;
@@ -29,7 +30,9 @@ export const verifyAuthUserMiddleware = (
 
     next();
   } catch (err) {
-    return res.status(401).json({ message: "Invalid Token" });
+    if (err instanceof AppError) {
+      return res.status(err.statusCode).send(err);
+    }
   }
 };
 

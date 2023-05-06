@@ -1,39 +1,45 @@
 import { Request, Response, NextFunction } from "express";
+import { AppError } from "../errors/appErrors";
 
 const verifyUserCreateFieldsMiddlewere = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
 
-  if (!username || !password) {
-    const error = [];
+  try {
+    if (!username || !password || !email) {
+      const error = [];
 
-    if (!username) {
-      error.push("username is a required field");
+      if (!username) {
+        error.push("username is a required field");
+      }
+      if (!password) {
+        error.push("password is a required field");
+      }
+      if (!email) {
+        error.push("email is a required field");
+      }
+
+      throw new AppError(400, error.join(" - "));
     }
-    if (!password) {
-      error.push("password is a required field");
+    if (username.length < 3) {
+      throw new AppError(400, "username must contain three characters or more");
     }
 
-    return res.status(400).json({ error: error });
-  }
-  if (username.length < 3) {
-    return res
-      .status(400)
-      .json({ error: "username must contain three characters or more" });
-  }
+    const regex = /^(?=.*[A-Z])(?=.*[0-9]).{8,15}$/;
 
-  const regex = /^(?=.*[A-Z])(?=.*[0-9]).{8,15}$/;
+    if (!regex.test(password)) {
+      throw new AppError(400, "password must be eight characters or more");
+    }
 
-  if (!regex.test(password)) {
-    return res
-      .status(400)
-      .json({ error: "password must be eight characters or more" });
+    next();
+  } catch (err) {
+    if (err instanceof AppError) {
+      return res.status(err.statusCode).send(err);
+    }
   }
-
-  next();
 };
 
 export default verifyUserCreateFieldsMiddlewere;

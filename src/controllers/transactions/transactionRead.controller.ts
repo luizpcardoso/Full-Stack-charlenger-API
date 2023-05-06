@@ -20,10 +20,7 @@ export const transactionReadController = async (
     return res.status(200).send(response);
   } catch (err) {
     if (err instanceof AppError) {
-      return res.send({
-        error: err.name,
-        message: err.message,
-      });
+      return res.status(err.statusCode).send(err);
     }
   }
 };
