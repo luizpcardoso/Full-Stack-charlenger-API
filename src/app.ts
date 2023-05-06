@@ -29,4 +29,4 @@ app.use(function (req, res, next) {
 app.use(express.json());
 appRoutes(app);
 
-app.listen(process.env.PORT || 3001);
+app.listen(process.env.PORT || 3000);

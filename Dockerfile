@@ -4,4 +4,4 @@ COPY package*.json ./
 RUN yarn
 COPY . .
 ENV NODE_PATH=./src
-EXPOSE 3001
+EXPOSE 3000
