@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 import { AppError } from "../../errors/appErrors";
 import userLoginService from "../../services/userLogin.service";
 
-export const userLoginController = async (req: Request, res: Response) => {
+export const userLoginController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const { email, password } = req.body;
 
@@ -13,5 +16,6 @@ export const userLoginController = async (req: Request, res: Response) => {
     if (err instanceof AppError) {
       return res.status(err.statusCode).send(err);
     }
+    return res.status(500).send("Internal Server Error");
   }
 };

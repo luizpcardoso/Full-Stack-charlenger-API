@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 import { AppError } from "../../errors/appErrors";
 import userGetAllService from "../../services/userGetAll.service";
 
-export const userGetAllController = async (req: Request, res: Response) => {
+export const userGetAllController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const users = await userGetAllService();
 
@@ -11,5 +14,6 @@ export const userGetAllController = async (req: Request, res: Response) => {
     if (err instanceof AppError) {
       return res.status(err.statusCode).send(err);
     }
+    return res.status(500).send("Internal Server Error");
   }
 };

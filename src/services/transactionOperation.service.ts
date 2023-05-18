@@ -8,25 +8,34 @@ import { v4 as uuidv4 } from "uuid";
 
 import { AppError } from "../errors/appErrors";
 
+import { ITransactionSend, IUser } from "../interfaces";
+import { Repository } from "typeorm";
+
 const transactionOperationService = async (
   userFrom: string,
   userTo: string,
   value: number
-) => {
-  const userRepository = AppDataSource.getRepository(User);
-  const transactionRepository = AppDataSource.getRepository(Transaction);
-  const accountRepository = AppDataSource.getRepository(Account);
+): Promise<ITransactionSend> => {
+  const userRepository: Repository<User> = AppDataSource.getRepository(User);
+  const transactionRepository: Repository<Transaction> =
+    AppDataSource.getRepository(Transaction);
+  const accountRepository: Repository<Account> =
+    AppDataSource.getRepository(Account);
 
-  const users = await userRepository.find();
-  const accounts = await accountRepository.find();
+  const users: User[] = await userRepository.find();
+  const accounts: Account[] = await accountRepository.find();
 
-  const userToDb = users.find((user) => user.username == userTo);
-  const userFromDb = users.find((user) => user.username == userFrom);
+  const userToDb: User | undefined = users.find(
+    (user) => user.username == userTo
+  );
+  const userFromDb: User | undefined = users.find(
+    (user) => user.username == userFrom
+  );
 
-  const accountTo = accounts.find((account) => {
+  const accountTo: Account | undefined = accounts.find((account) => {
     return account.account_id == userToDb?.account.account_id;
   });
-  const accountFrom = accounts.find((account) => {
+  const accountFrom: Account | undefined = accounts.find((account) => {
     return account.account_id == userFromDb?.account.account_id;
   });
 

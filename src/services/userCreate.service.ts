@@ -1,5 +1,9 @@
-import { IUserCreate } from "../interfaces";
-import { IUser } from "../interfaces";
+import {
+  IUser,
+  IUserCreateResponse,
+  IUserCreate,
+  IAccount,
+} from "../interfaces";
 import { User } from "../entities/user.entity";
 import { Account } from "../entities/accounts.entity";
 import { AppError } from "../errors/appErrors";
@@ -8,17 +12,19 @@ import { AppDataSource } from "../data-source";
 
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
+import { Repository } from "typeorm";
 
 export const userCreateService = async ({
   username,
   email,
   password,
-}: IUserCreate) => {
-  const userRepository = AppDataSource.getRepository(User);
-  const accountRepository = AppDataSource.getRepository(Account);
-  const users = await userRepository.find();
+}: IUserCreate): Promise<IUserCreateResponse> => {
+  const userRepository: Repository<IUser> = AppDataSource.getRepository(User);
+  const accountRepository: Repository<IAccount> =
+    AppDataSource.getRepository(Account);
+  const users: IUser[] = await userRepository.find();
 
-  const userAlreadyExist = users.find(
+  const userAlreadyExist: IUser | undefined = users.find(
     (user) => user.email === email || user.username === username
   );
 
@@ -26,7 +32,7 @@ export const userCreateService = async ({
     throw new AppError(409, "This username or email already exists");
   }
 
-  const newAccount = {
+  const newAccount: IAccount = {
     account_id: uuidv4(),
     balance: 100,
   };

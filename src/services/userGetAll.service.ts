@@ -1,13 +1,15 @@
+import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 
 import { User } from "../entities/user.entity";
 
-import { AppError } from "../errors/appErrors";
+import { IUserCreate } from "../interfaces";
 
-const userGetAllService = async () => {
-  const userRepository = AppDataSource.getRepository(User);
+const userGetAllService = async (): Promise<IUserCreate[]> => {
+  const userRepository: Repository<IUserCreate> =
+    AppDataSource.getRepository(User);
 
-  const users = await userRepository.find();
+  const users: IUserCreate[] = await userRepository.find();
 
   return users;
 };

@@ -8,7 +8,7 @@ export const verifyAuthUserMiddleware = (
   next: NextFunction
 ) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
+    const token: string | undefined = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
       throw new AppError(401, "Token required");

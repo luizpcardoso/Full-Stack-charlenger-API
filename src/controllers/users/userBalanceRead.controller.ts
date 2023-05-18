@@ -5,7 +5,7 @@ import userBalanceReadService from "../../services/userBalanceRead.service";
 export const userBalanceReadController = async (
   req: Request,
   res: Response
-) => {
+): Promise<Response> => {
   try {
     const username = req.username;
 
@@ -15,5 +15,6 @@ export const userBalanceReadController = async (
     if (err instanceof AppError) {
       return res.status(err.statusCode).send(err);
     }
+    return res.status(500).send("Internal Server Error");
   }
 };
