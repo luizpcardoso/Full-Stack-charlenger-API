@@ -4,7 +4,7 @@ import { AppError } from "../errors/appErrors";
 
 export const verifyAuthUserMiddleware = (
   req: Request,
-  res: Response,
+  res: Response<AppError>,
   next: NextFunction
 ) => {
   try {

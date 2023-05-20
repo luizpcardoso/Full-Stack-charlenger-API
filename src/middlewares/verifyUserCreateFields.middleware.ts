@@ -3,7 +3,7 @@ import { AppError } from "../errors/appErrors";
 
 const verifyUserCreateFieldsMiddlewere = async (
   req: Request,
-  res: Response,
+  res: Response<AppError>,
   next: NextFunction
 ) => {
   const { username, email, password } = req.body;

@@ -3,7 +3,7 @@ import { AppError } from "../errors/appErrors";
 
 const verifyTransactionFieldsMiddleware = async (
   req: Request,
-  res: Response,
+  res: Response<AppError>,
   next: NextFunction
 ) => {
   const { username, value } = req.body;
